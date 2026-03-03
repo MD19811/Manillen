@@ -1,0 +1,321 @@
+/* --- Basis Layout & Achtergrond --- */
+body { 
+    background-color: #1a5e20; 
+    color: #f8f9fa; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    text-align: center; 
+    margin: 0; 
+    overflow: hidden; 
+}
+
+#game-container { 
+    width: 100%; 
+    max-width: 950px; 
+    margin: auto; 
+    padding: 10px; 
+}
+
+/* --- De Startknop (Verbeterd) --- */
+#start-btn {
+    display: inline-block;
+    position: relative;
+    z-index: 100; /* Zorg dat hij boven alles staat */
+    margin: 10px auto;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: #e67e22;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #d35400;
+    transition: all 0.1s;
+}
+
+#start-btn:hover { background: #eb984e; }
+#start-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #d35400;
+}
+
+.hidden { display: none !important; }
+
+
+
+.played-card {
+    position: absolute;
+    z-index: 20;
+    /* De transitie zorgt voor het glijdende effect */
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Hand kaarten klaarmaken voor animatie */
+.hand .card-container {
+    transition: transform 0.3s ease, margin 0.3s ease, top 0.4s ease, left 0.4s ease;
+}
+
+
+
+
+/* --- Scoreboard & UI Teksten --- */
+#scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.score-line {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f1c40f; /* Goud voor scores */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#trick-counter {
+    font-size: 16px;
+    color: #ecf0f1;
+    margin: 10px 0;
+    font-style: italic;
+}
+
+#trump-display {
+    font-size: 22px;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.1);
+    display: inline-block;
+    padding: 8px 25px;
+    border-radius: 50px;
+    border: 2px solid gold;
+    margin-bottom: 15px;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
+}
+
+#turn-indicator {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    min-height: 32px;
+}
+
+/* --- Speeltafel --- */
+#table {
+    width: 100%; 
+    height: 420px; 
+    background: #27ae60; 
+    border: 10px solid #145a32;
+    border-radius: 180px; 
+    position: relative; 
+    margin: 20px 0; 
+    box-shadow: inset 0 0 80px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.4);
+}
+
+#played-cards-area { position: relative; width: 100%; height: 100%; }
+
+/* --- Kaart Labels (Verbeterd) --- */
+.card-label {
+    position: absolute;
+    background: #ffffff;
+    color: #2c3e50;
+    padding: 1px 1px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 8px;
+    line-height: 1.0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    min-width: 15px;
+}
+
+.card-label.top-left { top: 3px; left: 3px; }
+.card-label.bottom-right { bottom: 1px; right: 1px; transform: rotate(180deg); }
+
+.suit-red { color: #d32f2f !important; }
+.suit-black { color: #212121 !important; }
+
+/* --- Kaarten Layout --- */
+/* Kaarten groter maken */
+.card-container {
+    position: absolute; 
+    width: 120px; /* Was 85px */
+    height: 165px; /* Was 125px */
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); 
+    z-index: 10;
+}
+
+/* Labels in de hoeken */
+.card-label {
+    position: absolute;
+   background: rgba(255, 255, 255, 0.4);
+    color: #2c3e50;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: 900;
+    font-size: 17px; /* Iets groter voor leesbaarheid */
+    line-height: 1.1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+    min-width: 25px;
+    z-index: 2;
+    /* Backdrop-filter zorgt dat de afbeelding eronder een beetje vervaagt voor leesbaarheid */
+    backdrop-filter: blur(0px);
+    
+    
+}
+.card-label.top-left { 
+    top: 5px; 
+    left: 5px; 
+}
+.card-label.bottom-right { 
+    bottom: 5px; 
+    right: 5px; 
+    transform: rotate(180deg); /* Ondersteboven rechtsonder */
+}
+
+
+.card-img { 
+    width: 100%; height: 100%; 
+    border-radius: 10px; 
+    border: 2px solid white; 
+    object-fit: cover; 
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.5); 
+}
+
+/* --- Hand van de speler --- */
+.hand {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    height: 190px; /* Meer ruimte voor grotere kaarten */
+    padding-left: 40px;
+}
+
+.hand .card-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-left: -45px;
+    transition: transform 0.3s ease, margin 0.3s ease;
+}
+
+.hand .card-container:hover {
+    transform: translateY(-30px) scale(1.15);
+    z-index: 100;
+    margin-left: -15px;
+    margin-right: 20px;
+}
+
+.must-play { 
+    border: 4px solid #f1c40f !important; 
+    border-radius: 12px; 
+    box-shadow: 0 0 20px #f1c40f;
+}
+
+/* --- Bot Labels --- */
+.bot-label {
+    position: absolute;
+    font-size: 14px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: #ecf0f1;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.top { top: -35px; left: 50%; transform: translateX(-50%); }
+.left { left: 20px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+.right { right: 20px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+
+/* --- Modal (Troef Keuze) --- */
+.modal { 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.5); /* Minder donker */
+    display: none; 
+    align-items: flex-start; /* Modal iets hoger zetten */
+    justify-content: center; 
+    z-index: 1000;
+    backdrop-filter: none !important; /* Forceer GEEN blur */
+    padding-top: 50px;
+}
+
+.modal-content { 
+    background: #1e8449; 
+    padding: 40px; 
+    border-radius: 25px; 
+    border: 5px solid gold; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+.modal-content { 
+    background: #1e8449; 
+    padding: 30px; 
+    border-radius: 25px; 
+    border: 5px solid gold; 
+    box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+}
+
+.trump-options button { 
+    padding: 15px 30px; 
+    font-size: 24px; 
+    margin: 10px; 
+    cursor: pointer; 
+    border-radius: 12px; 
+    border: none; 
+    font-weight: 800;
+    background: white;
+    box-shadow: 0 4px 0 #bdc3c7;
+    transition: all 0.1s;
+}
+
+.trump-options button:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #bdc3c7;
+}
+
+/* De transitie op de kaarten zorgt voor de beweging */
+.card-container {
+    /* ... andere properties ... */
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); 
+}
+
+/* De posities waar de kaarten naartoe vliegen bij winst */
+.win-user { 
+    top: 150% !important; 
+    opacity: 0; 
+    transform: translate(-50%, -50%) scale(0.5); 
+}
+.win-bot2 { 
+    left: -50% !important; 
+    opacity: 0; 
+    transform: translate(-50%, -50%) scale(0.5); 
+}
+.win-bot3 { 
+    top: -150% !important; 
+    opacity: 0; 
+    transform: translate(-50%, -50%) scale(0.5); 
+}
+.win-bot4 { 
+    left: 150% !important; 
+    opacity: 0; 
+    transform: translate(-50%, -50%) scale(0.5); 
+}
