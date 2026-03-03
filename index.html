@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manillen Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+      <div id="scoreboard">
+	      <div class="score-line">Totaal Jij & Partner: <span id="score-teamA">0</span> / 100</div>
+	      <div class="score-line">Totaal Bots: <span id="score-teamB">0</span> / 100</div>
+</div>
+
+        <div id="trick-counter">Slagen: Team A: <span id="tricks-A">0</span> - Team B: <span id="tricks-B">0</span></div>
+        <div id="trump-display">Troef: <span id="current-trump">Nog niet gekozen</span></div>
+
+        <div id="table">
+            <div class="bot-label top">Partner (Bot 3)</div>
+            <div class="bot-label left">Tegenstander (Bot 2)</div>
+            <div class="bot-label right">Tegenstander (Bot 4)</div>
+            <div id="played-cards-area"></div>
+        </div>
+
+        <div id="player-area">
+            <h2 id="turn-indicator">Klik op 'Nieuw Spel' om te beginnen</h2>
+            <button id="start-btn" onclick="initGame()">Nieuw Spel</button>
+            <div id="player-hand" class="hand"></div>
+        </div>
+    </div>
+
+   <div id="trump-modal" class="modal" style="display:none;">
+       <div class="modal-content">
+           <h2>Kies Troef</h2>
+           <p>Welke kleur wordt troef deze ronde?</p>
+           <div class="trump-options">
+               <button onclick="selectTrump('Harten')" class="suit-red">&hearts; Harten</button>
+               <button onclick="selectTrump('Ruiten')" class="suit-red">&diams; Ruiten</button>
+               <button onclick="selectTrump('Klaveren')" class="suit-black">&clubs; Klaveren</button>
+               <button onclick="selectTrump('Schoppen')" class="suit-black">&spades; Schoppen</button>
+           </div>
+       </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
